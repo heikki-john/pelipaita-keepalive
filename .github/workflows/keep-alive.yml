@@ -38,3 +38,15 @@ jobs:
             exit 1
           fi
           echo "Keepalive kirjoitettu ✓"
+
+      - name: Keepalive SQL Supabaseen
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/rpc/keepalive_ping" \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{}')
+          echo "SQL status: $STATUS"
+          echo "Keepalive valmis ✓"
