@@ -50,3 +50,18 @@ jobs:
             -d '{}')
           echo "SQL status: $STATUS"
           echo "Keepalive valmis ✓"
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Asenna Puppeteer
+        run: npm install puppeteer
+
+      - name: Kirjaudu sisään ja pingaa
+        run: node keepalive.js
+        env:
+          APP_URL: https://heikki-john.github.io/pelipaita/index.html
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
